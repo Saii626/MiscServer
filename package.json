@@ -1,0 +1,42 @@
+{
+  "name": "miscserver",
+  "version": "1.0.0",
+  "description": "Perform Miscellaneous small jobs",
+  "main": "server/miscserver.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Saii626/MiscServer.git"
+  },
+  "author": "Saii",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Saii626/MiscServer/issues"
+  },
+  "homepage": "https://github.com/Saii626/MiscServer#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  },
+  "nodemonConfig": {
+    "verbose": true,
+    "ignore": [
+      "public/*",
+      "node_modules/*"
+    ],
+    "watch": [
+      "server/"
+    ],
+    "events": {
+      "start": "notify-send MiscServer \"Server started\"",
+      "crash": "notify-send MiscServer\"Server crashed\"",
+      "exit": "notify-send Miscerver\"Server stopped\""
+    }
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "pg": "^7.8.0",
+    "request": "^2.88.0"
+  }
+}

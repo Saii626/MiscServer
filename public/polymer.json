@@ -1,0 +1,37 @@
+{
+  "entrypoint": "news.html",
+  "sources": [
+    "css/*",
+    "images/*",
+    "resources.js"
+  ],
+  "extraDependencies": ["node_modules/web-animations-js/*"],
+  "npm": true,
+  "builds": [{
+    "name": "default",
+    "bundle": true,
+    "js": {
+      "minify": true,
+      "compile": "es2015"
+    },
+    "css": {
+      "minify": true
+    },
+    "html": {
+      "minify": true
+    }
+  }, {
+    "name": "dev",
+    "bundle": false,
+    "js": {
+      "minify": false,
+      "compile": "es2015"
+    },
+    "css": {
+      "minify": false
+    },
+    "html": {
+      "minify": false
+    }
+  }]
+}
