@@ -44,7 +44,7 @@ function showNews() {
     }
     newsList.forEach((news) => {
       let postData = {
-        msg: news.news,
+        msg: news.title,
         duration: 4,
         priority: 'LOW'
       }
