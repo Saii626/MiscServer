@@ -41,12 +41,14 @@ class NewsService {
     let queryText = 'SELECT * FROM news';
     let values = [];
     if (params.timestamp) {
-      queryText = queryText + ' WHERE timestamp <= $1::date';
+      queryText = queryText + ' WHERE timestamp <= $1';
       values.push(params.timestamp);
     }
-    queryText = queryText + ' ORDER BY timestamp';
+    queryText = queryText + ' ORDER BY timestamp DESC';
     queryText = queryText + ' LIMIT ' + (params.limit || 50) + ' OFFSET ' + (params.offset || 0);
 
+    console.log(queryText);
+    console.log(values);
     return await this.repo.queryInDb({
       query: queryText,
       values: values
@@ -69,6 +71,7 @@ class NewsRepo {
       if (err) {
         console.error(err);
       }
+      // console.log(res);
     });
   }
 
@@ -83,6 +86,7 @@ class NewsRepo {
       if (err) {
         // console.error(err);
       }
+      // console.log(res);
     });
   }
 

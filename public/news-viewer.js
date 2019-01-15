@@ -4,6 +4,7 @@ import {
 } from '@polymer/polymer/polymer-element.js';
 import '@polymer/iron-ajax/iron-ajax.js';
 import '@polymer/polymer/lib/elements/dom-repeat.js';
+import './news-card.js';
 import moment from 'moment';
 
 export class NewsViewer extends PolymerElement {
@@ -15,8 +16,7 @@ export class NewsViewer extends PolymerElement {
     return html `
     <dom-repeat items={{newsList}}>
       <template>
-        <div>Title: <span>{{item.title}}</span></div>
-        <div>Desc: <span>{{item.description}}</span></div>
+        <news-card data={{item}}></news-card>
       </template>
     </dom-repeat>
 
@@ -36,8 +36,8 @@ export class NewsViewer extends PolymerElement {
       xhrParams: {
         type: Object,
         value: {
-          timestamp: moment().format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
-          limit: 50,
+          timestamp: moment().format('YYYY-MM-DDTHH:mm:ss.SSS'),
+          limit: 10,
           offset: 0
         },
         observer: 'fetchNews'
@@ -47,11 +47,6 @@ export class NewsViewer extends PolymerElement {
         value: Resources
       }
     }
-  }
-
-  ready() {
-    super.ready();
-    // this.fetchNews();
   }
 
   handleNewsList(data) {

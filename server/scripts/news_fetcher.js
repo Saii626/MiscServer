@@ -4,6 +4,10 @@ const {
   NewsService
 } = require('../helper-scripts/news_service.js');
 
+let interval = 1 // minutes
+fetchNews();
+let newsFetchLoop = setInterval(fetchNews, interval * 1000 * 60); // Producer
+
 function setFetchRate(params) {
   interval = (params.interval && params.interval > 2) ? params.interval : interval;
   clearInterval(newsFetchLoop);
@@ -39,9 +43,6 @@ function fetchNews() {
   });
 }
 
-let interval = 3 // minutes
-fetchNews();
-let newsFetchLoop = setInterval(fetchNews, interval * 1000 * 60); // Producer
 
 // Consumer
 function showNews() {

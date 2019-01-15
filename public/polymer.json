@@ -1,10 +1,12 @@
 {
   "entrypoint": "news.html",
+  "shell": "news-viewer.js",
   "sources": [
     "css/*",
     "images/*",
     "resources.js"
   ],
+  "fragments": ["news-card.js"],
   "extraDependencies": ["node_modules/web-animations-js/*"],
   "npm": true,
   "builds": [{
