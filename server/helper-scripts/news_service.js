@@ -66,7 +66,7 @@ class NewsRepo {
       port: 5432
     });
     this.client.connect();
-    let sql = fs.readFileSync(path.join(__dirname, '../db-scripts/news.sql').toString());
+    let sql = fs.readFileSync(path.join(__dirname, '../db-scripts/news.sql')).toString();
     this.client.query(sql, (err, res) => {
       if (err) {
         console.error(err);
@@ -84,7 +84,7 @@ class NewsRepo {
 
     this.client.query(insertQuery, (err, res) => {
       if (err) {
-        // console.error(err);
+        console.error(err);
       }
       // console.log(res);
     });

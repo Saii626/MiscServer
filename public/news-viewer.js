@@ -14,6 +14,21 @@ export class NewsViewer extends PolymerElement {
 
   static get template() {
     return html `
+    <style>
+    #attribution {
+      width: 100%;
+      height: 20px;
+      font-size: 80%;
+    }
+    #poweredBy {
+      float: right;
+      cursor: pointer;
+      margin-right: 20px;
+    }
+    </style>
+    <div id="attribution">
+      <span id="poweredBy">powered by: NewsAPI.org</span>
+    </div>
     <dom-repeat items={{newsList}}>
       <template>
         <news-card data={{item}}></news-card>
@@ -39,8 +54,7 @@ export class NewsViewer extends PolymerElement {
           timestamp: moment().format('YYYY-MM-DDTHH:mm:ss.SSS'),
           limit: 10,
           offset: 0
-        },
-        observer: 'fetchNews'
+        }
       },
       _resources: {
         type: Object,
@@ -49,9 +63,31 @@ export class NewsViewer extends PolymerElement {
     }
   }
 
+  static get observers() {
+    return ['fetchNews(xhrParams.*)'];
+  }
+
+  ready() {
+    super.ready();
+
+    window.onscroll = function() {
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        console.log('Scrolled till end');
+        this.xhrParams.offset = this.xhrParams.offset + 1;
+        this.notifyPath('xhrParams.offset');
+      }
+    }.bind(this);
+
+    this.$.poweredBy.addEventListener('click', e => {
+      window.open(this._resources.urls.NEWSAPI_HOME, '_blank');
+    });
+  }
+
   handleNewsList(data) {
     if (data && data.detail && data.detail.response) {
-      this.set('newsList', data.detail.response);
+      let list = this.newsList;
+      list = list.concat(data.detail.response);
+      this.set('newsList', list);
       console.log(this.newsList);
     }
   }

@@ -4,23 +4,15 @@ const {
   NewsService
 } = require('../helper-scripts/news_service.js');
 
-let interval = 1 // minutes
+let interval = 5 // minutes
 fetchNews();
 let newsFetchLoop = setInterval(fetchNews, interval * 1000 * 60); // Producer
 
-function setFetchRate(params) {
-  interval = (params.interval && params.interval > 2) ? params.interval : interval;
-  clearInterval(newsFetchLoop);
-  newsFetchLoop = setInterval(fetchNews, interval * 1000 * 60);
-}
-
-// Populate News array
-let newsList = []; // Resource
 let newsService = new NewsService();
 
 function fetchNews() {
   const options = {
-    url: 'https://newsapi.org/v2/top-headlines?country=in&pageSize=50',
+    url: 'https://newsapi.org/v2/top-headlines?country=in&pageSize=100',
     method: 'GET',
     headers: {
       authorization: 'fd5cae3f615841cf9e13b5dd7fbc0ef6'
@@ -36,13 +28,11 @@ function fetchNews() {
         let news = newsService.getNewsList(body.articles);
         newsService.storeInDB(news);
       } else {
-        // console.log(res);
         console.log(body);
       }
     }
   });
 }
-
 
 // Consumer
 function showNews() {
@@ -69,6 +59,12 @@ function showNews() {
 
 function getNews(params) {
   return newsService.queryNewsList(params);
+}
+
+function setFetchRate(params) {
+  interval = (params.interval && params.interval > 2) ? params.interval : interval;
+  clearInterval(newsFetchLoop);
+  newsFetchLoop = setInterval(fetchNews, interval * 1000 * 60);
 }
 
 module.exports = {
