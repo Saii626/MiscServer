@@ -1,2 +1,2 @@
 # MiscServer
-A server to perform misceleneous small jobs
+A server to perform miscellaneous small jobs
