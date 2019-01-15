@@ -3,7 +3,7 @@ import {
   html
 } from '@polymer/polymer/polymer-element.js';
 import '@polymer/paper-dialog/paper-dialog.js';
-import '@polymer/paper-icon-button/paper-icon-button.js';
+import '@polymer/paper-button/paper-button.js';
 import '@polymer/iron-icons/iron-icons.js';
 import '@polymer/polymer/lib/elements/dom-if.js';
 import moment from 'moment';
@@ -71,11 +71,16 @@ export class NewsCard extends PolymerElement {
     }
     #dialog {
       background-color: rgba(0,0,0,0);
+      box-shadow: none;
     }
     #dialogImg {
       width: 1000px;
       height: 700px;
       object-fit: contain;
+    }
+    #dialogBtn {
+      float: right;
+      background-color: white;
     }
     #timestamp {
       padding-left: 20px;
@@ -104,7 +109,7 @@ export class NewsCard extends PolymerElement {
     </div>
 
     <paper-dialog id="dialog" modal>
-      <paper-icon-button icon="close" dialog-confirm autofocus></paper-icon-button>
+      <paper-button id="dialogBtn" dialog-confirm autofocus>Close</paper-button>
       <img id="dialogImg" src="[[data.image_url]]"></img>
     </paper-dialog>
     `

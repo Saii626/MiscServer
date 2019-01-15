@@ -36,26 +36,31 @@ function fetchNews() {
 
 // Consumer
 function showNews() {
-  if (newsList && newsList.length > 0) {
-    let newsToShow = newsList.shift();
-
-    let postData = {
-      msg: newsToShow.news,
-      duration: 4,
-      priority: 'LOW'
+  let newsListPromise = newsService.queryNewsList({});
+  newsListPromise.then((newsList) => {
+    if (!newsList || newsList.length <= 0) {
+      setTimeout(showNews, 1000);
+      return;
     }
-    request.post('http://localhost:8040/lcd/displayMsg', {
-      json: postData
-    }, function(err, res, body) {
-      if (err) {
-        console.error(err);
+    newsList.forEach((news) => {
+      let postData = {
+        msg: news.news,
+        duration: 4,
+        priority: 'LOW'
       }
+      request.post('http://localhost:8040/lcd/displayMsg', {
+        json: postData
+      }, function(err, res, body) {
+        if (err) {
+          console.error(err);
+        }
+      });
     });
-    setTimeout(showNews, 500);
-  } else {
-    setTimeout(showNews, 5000);
-  }
+    setTimeout(showNews, interval * 1000 * 60);
+  });
 }
+
+showNews();
 
 function getNews(params) {
   return newsService.queryNewsList(params);
