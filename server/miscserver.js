@@ -62,7 +62,7 @@ app.get('/:script', (req, res) => {
 
 function registerSelf() {
   const postData = {
-    path: 'notify',
+    path: 'misc',
     ip: 'http://localhost:8050',
     name: 'misc'
   }
